@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<h:outputStylesheet library="simplecar" name="estilo.css" />
+	<title>SimpleCar</title>
+</h:head>
+
+<h:body>
+
+	<header>
+		<h1>SimpleCar</h1>
+	</header>
+
+	<h:form>
+		<p:growl id="msgs" showDetail="true" />
+
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-6">
+					<p:graphicImage library="simplecar" name="SIMPLE CAR5.png"
+						width="400px" />
+				</div>
+				<div class="ui-grid-col-4" id="meioLogin">
+					<p:fieldset legend="Login no Sistema" style="margin-bottom:20px">
+						<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="Login:" for="login" />
+								<p:inputText id="login" value="#{loginBean.usuario.login}" />
+
+								<p:outputLabel value="Senha:" for="senha" />
+								<p:password id="senha" value="#{loginBean.usuario.senha}"
+									label="Senha" required="true" />
+
+								<p:commandButton value="Entrar"
+									action="#{loginBean.efetuaLogin()}" />
+						</h:panelGrid>
+					</p:fieldset>
+				</div>
+				<div class="ui-grid-col-2" ></div>
+			</div>
+		</div>
+	</h:form>
+
+	<footer id="rodape">
+		<p>Copyright 2015. Todos os direitos reservados a Rafael de
+			Andrade Guerra</p>
+		<p>Gerenciador de Manutenção</p>
+	</footer>
+
+</h:body>
+
+</html>

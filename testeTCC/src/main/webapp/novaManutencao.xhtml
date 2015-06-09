@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="corpo">
+		<h:form>
+			<p:fieldset legend="Manutenção" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:graphicImage library="simplecar"
+						name="manutencao_Car-Jumper.png" />
+					<h:outputText
+						value="Registre aqui as Manutenções realizadas nos seus veiculos, 
+				atente para o Tipo de Manutenção, pois o preenchimento incorreto acarretará em indicadores falsos.
+				Selecione o Carro, e as datas de Inicio e Término. No campo descrição escreva o serviço realizado 
+				e o valor se for o caso." />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+		<h:form id="campo-manutencao">
+			<p:fieldset legend="Nova Manutenção" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<p:outputLabel value="Tipo da Manutenção" />
+					<p:selectOneMenu
+						value="#{manutencaoBean.manutencao.tipoManutencao}">
+						<f:selectItems value="#{manutencaoBean.tipoManutencao}" var="tipo"
+							itemLabel="#{tipoManutencao.descricao}"
+							itemValue="#{tipoManutencao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Data Início" for="dataInicio" />
+					<p:calendar id="dataInicio" size="10" maxlength="10"
+						value="#{manutencaoBean.manutencao.dataInicioManutencao}"
+						pattern="dd/MM/yyyy" mask="99/99/9999" />
+
+					<p:outputLabel value="Data Término" for="dataFim" />
+					<p:calendar id="dataFim" size="10" maxlength="10"
+						value="#{manutencaoBean.manutencao.dataFimManutencao}"
+						pattern="dd/MM/yyyy" mask="99/99/9999" />
+
+					<p:outputLabel value="Selecione o Carro" />
+					<p:selectOneMenu value="#{manutencaoBean.manutencao.carro}">
+						<f:selectItems value="#{carroBean.carros}" var="carro"
+							itemValue="#{carro.id}" itemLabel="#{carro.placa}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Descrição do Serviço" for="descricao" />
+					<p:inputTextarea id="descricao" rows="3" cols="50"
+						value="#{manutencaoBean.manutencao.descServicos}" />
+
+				</h:panelGrid>
+				<p:commandButton value="Gravar" >
+					<p:confirm icon="ui-icon-alert"
+						header="Confirmação para Cadastro de Nova Manutenção"
+						message="Deseja realmente cadastrar esta manutenção. Depois de cadastrado não poderá ser alterado." />
+					<f:ajax event="click" listener="#{manutencaoBean.grava}" rende="@campo-manutencao" />
+					<p:resetInput target="campo-manutencao"/>
+				</p:commandButton>
+			</p:fieldset>
+		</h:form>
+		<h:form id="frm">
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{manutencaoBean.preparaNovoCadastro}" process="@this"
+						update="motorista-dialog"
+						oncomplete="PF('edicaoManutencaoDialog').show()">
+						<p:resetInput target="manutencao-dialog" />
+					</p:commandButton>
+			</f:facet>
+			</p:toolbar>
+			<p:dialog header="Novo Motorista" widgetVar="edicaoMotoristaDialog"
+				id="motorista-dialog" resizable="false" modal="false"
+				closeOnEscape="true">
+
+				<p:messages id="msg-dialog" />
+			</p:dialog>
+		
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>

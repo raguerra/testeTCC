@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8"/>
+	<h:outputStylesheet library="simplecar" name="estilo.css" />
+	<title>Simple Car</title>
+</h:head>
+<h:body>
+
+	<header>
+		<h1>SimpleCar</h1>
+	</header>
+
+	<div id="meio">
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					<h:form>
+						<p:growl id="messages" showDetail="true" />
+						<p:slideMenu style="width:180px">
+							<p:menuitem value="Home" action="menu?faces-redirect=true"
+								icon="fa fa-bank" />
+							<p:separator />
+							<p:submenu label="Garagem" icon="fa fa-home">
+								<p:menuitem value="Carros" action="carro?faces-redirect=true" />
+								<p:menuitem value="Manutenção" action="novaManutencao?faces-redirect=true" />
+								<p:menuitem value="Oficina / Seguradora" action="seguro?faces-redirect=true" />
+								<p:menuitem value="Multas" action="novaMulta?fasces-redirect=true" />
+							</p:submenu>
+							<p:separator />
+							<p:submenu label="Colaboradores" icon="fa fa-users">
+								<p:menuitem value="Motoristas"
+									action="motorista?faces-redirect=true" />
+								<p:menuitem value="Usários" action="usuario?faces-redirect=true" />
+							</p:submenu>
+							<p:separator />
+							<p:submenu label="Viagens" icon="fa fa-road">
+								<p:menuitem value="Consultar"
+									action="consultaViagem?faces-redirect=true" />
+								<p:menuitem value="Nova Viagem"
+									action="viagem?faces-redirect=true" />
+							</p:submenu>
+							<p:separator />
+							<p:submenu label="Administrador" icon="fa fa-cubes">
+								<p:submenu label="Novo">
+									<p:menuitem value="Usuario"
+										action="novoUsuario?faces-redirect=true" />
+									<p:menuitem value="Nova Oficina / Seguradora" />
+								</p:submenu>
+								<p:menuitem value="Controle de Ações" />
+							</p:submenu>
+							<p:separator />
+							<p:submenu label="Sobre" icon="fa fa-info">
+								<p:menuitem value="Sobre a Empresa" />
+								<p:menuitem value="Manual do Sistema" />
+								<p:menuitem value="Créditos" />
+							</p:submenu>
+							<p:separator />
+							<p:menuitem value="Sair" icon="fa fa-sign-out" action="#{loginBean.sairApp()}" />
+						</p:slideMenu>
+					</h:form>
+				</div>
+				<div class="ui-grid-col-10">
+					<ui:insert name="corpo" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer id="rodape">
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					<p>Gerenciador de Manutenção</p>
+				</div>
+				<div class="ui-grid-col-4">
+					<p>Gerenciador de Manutenção</p>
+				</div>
+				<div class="ui-grid-col-4" id="usuarioLogado">
+					<p>Logado como: #{usuarioLogadoBean.usuario.login}</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+	<h:form>
+		<p:confirmDialog global="true">
+			<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+							icon="ui-icon-close"/>
+			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+							icon="ui-icon-check"/>
+		</p:confirmDialog>
+	</h:form>
+</h:body>
+</html>

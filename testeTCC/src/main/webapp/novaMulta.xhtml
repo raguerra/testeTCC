@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+			<p:messages id="msgs" />
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{carroBean.preparaNovoCadastro}" process="@this"
+						update="multa-dialog" oncomplete="PF('edicaoMultaDialog').show()">
+						<p:resetInput target="multa-dialog" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton icon="ui-icon-arrowthick-1-s"
+						title="Exportar para XLS" ajax="false" immediate="true">
+						<p:dataExporter type="xls" target="multa-table"
+							fileName="TabelaMultas" />
+					</p:commandButton>
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable value="#{carroBean.carros}" var="carro" id="multa-table"
+				emptyMessage="Nenhuma Multa Cadastrada" rows="5" paginator="true"
+				lazy="true" paginatorPosition="bottom" style="margin-top:10px"
+				selection="#{carroBean.carro}" selectionMode="single"
+				rowKey="#{carro.id}">
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<p:column headerText="Placa" sortBy="#{carro.placa}" width="70">
+					<h:outputText value="#{carro.placa}" />
+				</p:column>
+
+				<p:column headerText="Tipo de Multa">
+					<h:outputText value="#{carro.marca}" />
+				</p:column>
+
+				<p:column headerText="Valor" width="100">
+					<h:outputText value="#{carro.modelo}" />
+				</p:column>
+
+				<p:column headerText="Motorista" width="100">
+					<h:outputText value="#{carro.versao}" />
+				</p:column>
+
+				<p:column headerText="Data da Multa">
+					<h:outputText value="#{carro.chassi}" />
+				</p:column>
+
+				<p:column headerText="Hora da Multa">
+					<h:outputText value="#{carro.dataAquisicao}" />
+				</p:column>
+
+				<p:column headerText="Local da Multa">
+					<h:outputText value="#{carro.hodometroInicial}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Novo Multa" widgetVar="edicaoMultaDialog"
+				id="multa-dialog" resizable="false" modal="false"
+				closeOnEscape="true">
+
+				<p:defaultCommand target="salvar-button" scope="multa-dialog" />
+
+				<p:messages id="msg-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog">
+					<p:outputLabel value="Placa" for="placa" />
+					<p:inputMask id="placa" size="12" maxlength="8"
+						value="#{carroBean.carro.placa}" mask="aaa-9999">
+						<f:validateBean />
+					</p:inputMask>
+
+					<p:outputLabel value="Tipo de Multa" for="marca" />
+					<p:inputText id="marca" size="12" maxlength="12"
+						value="#{carroBean.carro.marca}" />
+
+					<p:outputLabel value="Valor" for="modelo" />
+					<p:inputText id="modelo" size="12" maxlength="12"
+						value="#{carroBean.carro.modelo}" />
+
+					<p:outputLabel value="Motorista" for="versao" />
+					<p:inputText id="versao" size="12" maxlength="12"
+						value="#{carroBean.carro.versao}" />
+
+					<p:outputLabel value="Data da Multa" for="chassi" />
+					<p:inputMask mask="*****************" id="chassi" size="20"
+						maxlength="17" value="#{carroBean.carro.chassi}" />
+
+					<p:outputLabel value="Hora da Multa" for="data-aquisicao" />
+					<p:calendar id="data-aquisicao" size="10" maxlength="10"
+						value="#{carroBean.carro.dataAquisicao}" pattern="dd/MM/yyyy"
+						mask="99/99/9999" />
+
+					<p:outputLabel value="Local da Multa" for="hodometro-inicial" />
+					<p:inputText id="hodometro-inicial" size="20" maxlength="20"
+						value="#{carroBean.carro.hodometroInicial}" />
+
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{carroBean.grava}" process="multa-dialog"
+						update="msg-dialog painel-dialog"
+						oncomplete="if(!args.validationFailed) PF('edicaoMultaDialog').hide()" />
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

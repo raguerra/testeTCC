@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewAction action="#{motoristaBean.consultar}" />
+		</f:metadata>
+
+		<h1>Cadastro de Motoristas</h1>
+
+		<h:form id="frm">
+			<p:messages id="msgs" />
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{motoristaBean.preparaNovoCadastro}" process="@this"
+						update="motorista-dialog"
+						oncomplete="PF('edicaoMotoristaDialog').show()">
+						<p:resetInput target="motorista-dialog" />
+					</p:commandButton>
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						disabled="#{motoristaBean.motoristaSelecionado == null}"
+						process="@this" update="motorista-dialog"
+						oncomplete="PF('edicaoMotoristaDialog').show()">
+						<p:resetInput target="motorista-dialog" />
+						<f:setPropertyActionListener
+							value="#{motoristaBean.motoristaSelecionado}"
+							target="#{motoristaBean.motorista}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						process="@this" update="motorista-table msgs toolbar"
+						action="#{motoristaBean.remove(motorista)}"
+						disabled="#{motoristaBean.motoristaSelecionado == null}">
+						<p:confirm icon="ui-icon-alert" header="Confirmação de Exclusão"
+							message="Deseja realmente excluir este Motorista?" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-arrowthick-1-s"
+						title="Exportar para XLS" ajax="false" immediate="true">
+						<p:dataExporter type="xls" target="motorista-table"
+							fileName="TabelaMotoristas" />
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable value="#{motoristaBean.motoristas}" var="motorista"
+				id="motorista-table" emptyMessage="Nenhuma Motorista Cadastrado"
+				rows="5" paginator="true" paginatorPosition="bottom"
+				style="margin-top:10px"
+				selection="#{motoristaBean.motoristaSelecionado}"
+				selectionMode="single" rowKey="#{motorista.id}">
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<p:column headerText="Nome" sortBy="#{motorista.nome}">
+					<h:outputText value="#{motorista.nome}" />
+				</p:column>
+
+				<p:column headerText="RG">
+					<h:outputText value="#{motorista.rg}" />
+				</p:column>
+
+				<p:column headerText="Tipo Sanguineo">
+					<h:outputText value="#{motorista.tipoSangue}" />
+				</p:column>
+
+				<p:column headerText="Número da CNH">
+					<h:outputText value="#{motorista.cnh}" />
+				</p:column>
+
+				<p:column headerText="Categoria CNH">
+					<h:outputText value="#{motorista.categoriaCnh}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Novo Motorista" widgetVar="edicaoMotoristaDialog"
+				id="motorista-dialog" resizable="false" modal="false"
+				closeOnEscape="true">
+
+				<p:messages id="msg-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog">
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText id="nome" size="50" maxlength="50"
+						value="#{motoristaBean.motorista.nome}">
+						<f:validateBean />
+					</p:inputText>
+
+					<p:outputLabel value="RG" for="rg" />
+					<p:inputText id="rg" size="30" maxlength="15"
+						value="#{motoristaBean.motorista.rg}" />
+
+					<p:outputLabel value="Tipo Sanguineo" for="tipoSangue" />
+					<p:selectOneMenu id="tipoSangue"
+						value="#{motoristaBean.motorista.tipoSangue}" style="width:180px">
+						<f:selectItem itemLabel="Tipo Sangue - Fator RH" itemValue="" />
+						<f:selectItem itemLabel="A - POS" itemValue="A - POS" />
+						<f:selectItem itemLabel="A - NEG" itemValue="A - NEG" />
+						<f:selectItem itemLabel="B - POS" itemValue="B - POS" />
+						<f:selectItem itemLabel="B - NEG" itemValue="B - NEG" />
+						<f:selectItem itemLabel="AB - POS" itemValue="AB - POS" />
+						<f:selectItem itemLabel="AB - NEG" itemValue="AB - NEG" />
+						<f:selectItem itemLabel="O - POS" itemValue="O - POS" />
+						<f:selectItem itemLabel="O - NEG" itemValue="O - NEG" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Número da CNH" for="cnh" />
+					<p:inputMask id="cnh" size="30" maxlength="11" mask="99999999999"
+						value="#{motoristaBean.motorista.cnh}" />
+
+					<p:outputLabel value="Categoria CNH" for="catCnh" />
+					<p:selectOneMenu id="catCnh"
+						value="#{motoristaBean.motorista.categoriaCnh}"
+						style="width:180px">
+						<f:selectItem itemLabel="Categoria CNH" itemValue="" />
+						<f:selectItem itemLabel="A" itemValue="A" />
+						<f:selectItem itemLabel="AB" itemValue="AB" />
+						<f:selectItem itemLabel="B" itemValue="B" />
+						<f:selectItem itemLabel="C" itemValue="C" />
+						<f:selectItem itemLabel="D" itemValue="D" />
+						<f:selectItem itemLabel="E" itemValue="E" />
+					</p:selectOneMenu>
+
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{motoristaBean.grava}" process="motorista-dialog"
+						update="msg-dialog painel-dialog"
+						oncomplete="if(!args.validationFailed) PF('edicaoMotoristaDialog').hide()" />
+				</p:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+</html>
