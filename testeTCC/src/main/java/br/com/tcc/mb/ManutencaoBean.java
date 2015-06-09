@@ -20,7 +20,8 @@ public class ManutencaoBean implements Serializable {
 	
 	private Carro carro = new Carro();
 	
-	private Manutencao manutencao = new Manutencao();
+	@Inject
+	private Manutencao manutencao;
 	
 	private int idCarro;
 	

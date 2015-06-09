@@ -21,10 +21,25 @@
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
-		<h:form id="campo-manutencao">
-			<p:fieldset legend="Nova Manutenção" style="margin-bottom:20px">
-				<h:panelGrid columns="2" cellpadding="5">
 
+		<h:form id="frm">
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{manutencaoBean.preparaNovoCadastro}" process="@this"
+						update="manutencao-dialog"
+						oncomplete="PF('edicaoManutencaoDialog').show()">
+						<p:resetInput target="manutencao-dialog" />
+					</p:commandButton>
+				</f:facet>
+			</p:toolbar>
+			<p:dialog header="Nova Manutenção" widgetVar="edicaoManutencaoDialog"
+				id="manutencao-dialog" resizable="false" modal="false"
+				closeOnEscape="true">
+
+				<p:messages id="msg-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog">
 					<p:outputLabel value="Tipo da Manutenção" />
 					<p:selectOneMenu
 						value="#{manutencaoBean.manutencao.tipoManutencao}">
@@ -53,37 +68,19 @@
 					<p:inputTextarea id="descricao" rows="3" cols="50"
 						value="#{manutencaoBean.manutencao.descServicos}" />
 
-				</h:panelGrid>
-				<p:commandButton value="Gravar" >
-					<p:confirm icon="ui-icon-alert"
-						header="Confirmação para Cadastro de Nova Manutenção"
-						message="Deseja realmente cadastrar esta manutenção. Depois de cadastrado não poderá ser alterado." />
-					<f:ajax event="click" listener="#{manutencaoBean.grava}" rende="@campo-manutencao" />
-					<p:resetInput target="campo-manutencao"/>
-				</p:commandButton>
-			</p:fieldset>
-		</h:form>
-		<h:form id="frm">
-			<p:toolbar id="toolbar">
-				<f:facet name="left">
-					<p:commandButton value="Novo" icon="ui-icon-document"
-						action="#{manutencaoBean.preparaNovoCadastro}" process="@this"
-						update="motorista-dialog"
-						oncomplete="PF('edicaoManutencaoDialog').show()">
-						<p:resetInput target="manutencao-dialog" />
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{manutencaoBean.grava}" process="manutencao-dialog"
+						update="msg-dialog painel-dialog"
+						oncomplete="if(!args.validationFailed) PF('edicaoManutencaoDialog').hide()">
+						<p:confirm icon="ui-icon-alert"
+							header="Confirmação para Cadastro de Nova Manutenção"
+							message="Deseja realmente cadastrar esta manutenção. 
+						Depois de cadastrado não poderá ser alterado." />
 					</p:commandButton>
-			</f:facet>
-			</p:toolbar>
-			<p:dialog header="Novo Motorista" widgetVar="edicaoMotoristaDialog"
-				id="motorista-dialog" resizable="false" modal="false"
-				closeOnEscape="true">
-
-				<p:messages id="msg-dialog" />
+				</p:panelGrid>
 			</p:dialog>
-		
 		</h:form>
 	</ui:define>
-
 </ui:composition>
-
 </html>
