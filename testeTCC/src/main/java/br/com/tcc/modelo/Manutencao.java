@@ -9,8 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,9 +25,11 @@ public class Manutencao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "carro_id")
-	private Carro carro;
+//	@ManyToOne
+//	@JoinColumn(name = "carro_id")
+//	private Carro carro;
+	
+	private String placaCarro;
 
 	@Enumerated(EnumType.STRING)
 	private TipoManutencao tipoManutencao;
@@ -45,12 +47,12 @@ public class Manutencao implements Serializable {
 	}
 
 	public Manutencao(TipoManutencao tipoManutencao, String descServicos,
-			Date dataInicioManutencao, Date dataFimManutencao, Carro carro) {
+			Date dataInicioManutencao, Date dataFimManutencao) {
 		this.tipoManutencao = tipoManutencao;
 		this.descServicos = descServicos;
 		this.dataInicioManutencao = dataInicioManutencao;
 		this.dataFimManutencao = dataFimManutencao;
-		this.carro = carro;
+//		this.carro = carro;
 	}
 
 	public int getId() {
@@ -61,16 +63,26 @@ public class Manutencao implements Serializable {
 		this.id = id;
 	}
 
-	public Carro getCarro() {
-		return carro;
-	}
-
-	public void setCarro(Carro carro) {
-		this.carro = carro;
-	}
-
+//	public Carro getCarro() {
+//		return carro;
+//	}
+//
+//	public void setCarro(Carro carro) {
+//		this.carro = carro;
+//	}
+	
+	
+	
 	public TipoManutencao getTipoManutencao() {
 		return tipoManutencao;
+	}
+
+	public String getPlacaCarro() {
+		return placaCarro;
+	}
+
+	public void setPlacaCarro(String placaCarro) {
+		this.placaCarro = placaCarro;
 	}
 
 	public void setTipoManutencao(TipoManutencao tipoManutencao) {

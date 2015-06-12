@@ -23,6 +23,7 @@
 		</h:form>
 
 		<h:form id="frm">
+			<p:messages id="msgs" />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
 					<p:commandButton value="Novo" icon="ui-icon-document"
@@ -59,9 +60,9 @@
 						pattern="dd/MM/yyyy" mask="99/99/9999" />
 
 					<p:outputLabel value="Selecione o Carro" />
-					<p:selectOneMenu value="#{manutencaoBean.manutencao.carro}">
+					<p:selectOneMenu value="#{manutencaoBean.manutencao.placaCarro}">
 						<f:selectItems value="#{carroBean.carros}" var="carro"
-							itemValue="#{carro.id}" itemLabel="#{carro.placa}" />
+							itemValue="#{carro.placa}" itemLabel="#{carro.placa}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Descrição do Serviço" for="descricao" />

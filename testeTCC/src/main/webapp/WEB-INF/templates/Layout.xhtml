@@ -40,7 +40,7 @@
 							<p:separator />
 							<p:submenu label="Viagens" icon="fa fa-road">
 								<p:menuitem value="Consultar"
-									action="consultaViagem?faces-redirect=true" />
+									action="consultaMapa?faces-redirect=true" />
 								<p:menuitem value="Nova Viagem"
 									action="viagem?faces-redirect=true" />
 							</p:submenu>
@@ -56,8 +56,9 @@
 							<p:separator />
 							<p:submenu label="Sobre" icon="fa fa-info">
 								<p:menuitem value="Sobre a Empresa" />
-								<p:menuitem value="Manual do Sistema" />
-								<p:menuitem value="Créditos" />
+								<p:menuitem value="Manual do Sistema" action="manual?faces-redirect=true" />
+								<p:menuitem value="Sobre o Sistema" oncomplete="PF('exibirSobreDialog').show()"/>
+								<p:menuitem value="Créditos" oncomplete="PF('exibirCreditosDialog').show()" />
 							</p:submenu>
 							<p:separator />
 							<p:menuitem value="Sair" icon="fa fa-sign-out" action="#{loginBean.sairApp()}" />
@@ -94,6 +95,50 @@
 			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
 							icon="ui-icon-check"/>
 		</p:confirmDialog>
+	</h:form>
+	
+	<h:form id="dialog-sobre">
+		<p:dialog header="Sobre o Sistema" widgetVar="exibirSobreDialog"
+					id = "sobre-dialog" closeOnEscape="true"
+					resizable="false" modal="true">
+			<h:panelGrid columns="1">
+			<h:outputText value="JAVA: 1.8, JSF(Mojarra-2.2.0), CDI(Weld 2.2.1.Fina), Hibernate 5.1.2.Final" />
+			<p:separator/>
+			<h:outputText value="PrimeFaces: 5.2" />
+			<p:separator/>
+			<h:outputText value="Banco de Dados: MySQL" />
+			<h:outputText value="MySQL Server: MAMP" />
+			<p:separator/>
+			<h:outputText value="Servidor: Apache Tomcat 8" />
+			<p:separator/>
+			<h:outputText value="Versão 1.0" />
+			<p:commandButton value="Sair" 
+						oncomplete="PF('exibirSobreDialog').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+	
+	<h:form id="dialog-creditos">
+		<p:dialog header="Créditos" widgetVar="exibirCreditosDialog"
+					id = "creditos-dialog" closeOnEscape="true"
+					resizable="false" modal="true">
+			<h:panelGrid columns="1">
+			<h:outputText value="Amostra do Sistema SimpleCAr, apresentado junto ao curso" />
+			<h:outputText value=" de Análise e Desenvolvimento de Sistemas," />
+			<h:outputText value=" da ETEP Faculdades, como parte das exigências para a obtenção do título de" />
+			<h:outputText value= "Tecnólogo de Análise e Desenvolvimento de Sistemas ." />
+			<p:separator/>
+			<h:outputText value="Aluno: " />
+			<h:outputText value="Rafael de Andrade Guerra" />
+			<p:separator/>
+			<h:outputText value="Orientadores:" />
+			<h:outputText value="Professor Victor Machado" />
+			<h:outputText value="Professor Pedro Mateus" />
+			<h:outputText value="Professor Yasuo Kono" />
+			<p:commandButton value="Sair" 
+						oncomplete="PF('exibirCreditosDialog').hide()" />
+			</h:panelGrid>
+		</p:dialog>
 	</h:form>
 </h:body>
 </html>

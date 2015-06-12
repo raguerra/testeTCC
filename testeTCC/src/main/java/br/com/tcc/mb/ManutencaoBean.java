@@ -36,8 +36,8 @@ public class ManutencaoBean implements Serializable {
 	}
 	
 	public void grava(){
-		Carro carro = carroDao.buscaPorId(idCarro);
-		manutencao.setCarro(carro);
+//		Carro carro = carroDao.buscaPorId(idCarro);
+//		manutencao.setCarro(carro);
 		this.manutencaoDao.adiciona(manutencao);
 		this.manutencao = new Manutencao();
 	}

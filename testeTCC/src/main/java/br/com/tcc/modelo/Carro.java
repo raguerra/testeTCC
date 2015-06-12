@@ -2,17 +2,17 @@ package br.com.tcc.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+//import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -52,8 +52,8 @@ public class Carro implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusBd statusBd;
 
-	@OneToMany(mappedBy = "carro", cascade = CascadeType.PERSIST, targetEntity = Manutencao.class, fetch = FetchType.LAZY)
-	private List<Manutencao> manutencoes;
+//	@OneToMany(mappedBy = "carro", cascade = CascadeType.PERSIST, targetEntity = Manutencao.class, fetch = FetchType.LAZY)
+//	private List<Manutencao> manutencoes;
 
 	public Date getDataAquisicao() {
 		return dataAquisicao;
@@ -135,13 +135,13 @@ public class Carro implements Serializable {
 		this.statusBd = statusBd;
 	}
 
-	public List<Manutencao> getManutencoes() {
-		return manutencoes;
-	}
-
-	public void setManutencoes(List<Manutencao> manutencoes) {
-		this.manutencoes = manutencoes;
-	}
+//	public List<Manutencao> getManutencoes() {
+//		return manutencoes;
+//	}
+//
+//	public void setManutencoes(List<Manutencao> manutencoes) {
+//		this.manutencoes = manutencoes;
+//	}
 
 	@Override
 	public int hashCode() {
