@@ -29,11 +29,31 @@ div#meio {
 	margin-top: 10px;
 }
 
+div#meioNovoUsuario {
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 60px;
+}
+
+div#meioNovoUsuario2 {
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 100px;
+	margin-top: 60px;
+}
+
 div#meioLogin {
 	margin-bottom: 10px;
 	margin-right: 10px;
 	margin-left: 10px;
 	margin-top: 60px;
+}
+
+div#lateral {
+	margin-right: 5px;
+	margin-left: 30px;
+	margin-right: 5px;
 }
 
 footer#rodape {
@@ -47,4 +67,12 @@ footer#rodape p {
 	font-size: 6pt;
 	color: rgb(255, 255, 255);
 	text-align: center;
+}
+
+h#title{
+	background-color: lightgrey;
+    width: 300px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
 }

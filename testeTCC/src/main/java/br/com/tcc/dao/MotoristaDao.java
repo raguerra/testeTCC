@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.Query;
+//import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.tcc.enumClasse.StatusBd;
 import br.com.tcc.modelo.Motorista;
@@ -39,10 +40,15 @@ public class MotoristaDao implements Serializable {
 
 	public List<Motorista> listaTodos() {
 
-		CriteriaQuery<Motorista> query = manager.getCriteriaBuilder()
-				.createQuery(Motorista.class);
-		query.select(query.from(Motorista.class));
-		List<Motorista> lista = manager.createQuery(query).getResultList();
+//		CriteriaQuery<Motorista> query = manager.getCriteriaBuilder()
+//				.createQuery(Motorista.class);
+//		query.select(query.from(Motorista.class));
+//		List<Motorista> lista = manager.createQuery(query).getResultList();
+		Query query = manager.createQuery("select m from Motorista m where m.statusBd=:pStatus");
+		query.setParameter("pStatus", StatusBd.ATIVO);
+		
+		@SuppressWarnings("unchecked")
+		List<Motorista> lista = query.getResultList();
 		return lista;
 	}
 

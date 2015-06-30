@@ -29,7 +29,7 @@
 								<p:menuitem value="Carros" action="carro?faces-redirect=true" />
 								<p:menuitem value="Manutenção" action="novaManutencao?faces-redirect=true" />
 								<p:menuitem value="Oficina / Seguradora" action="seguro?faces-redirect=true" />
-								<p:menuitem value="Multas" action="novaMulta?fasces-redirect=true" />
+								<p:menuitem value="Multas" action="novaMulta?faces-redirect=true" />
 							</p:submenu>
 							<p:separator />
 							<p:submenu label="Colaboradores" icon="fa fa-users">
@@ -82,7 +82,7 @@
 					<p>SimpleCar</p>
 				</div>
 				<div class="ui-grid-col-4" id="usuarioLogado">
-					<p>Logado como: #{usuarioLogadoBean.usuario.login}</p>
+					<p>Logado como: #{usuarioLogadoBean.usuario.nome}</p>
 				</div>
 			</div>
 		</div>

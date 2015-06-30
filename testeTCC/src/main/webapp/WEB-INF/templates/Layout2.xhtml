@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<h:outputStylesheet library="simplecar" name="estilo.css" />
+	<title>Simple Car</title>
+</h:head>
+<h:body>
+
+	<header>
+		<h1>SimpleCar</h1>
+	</header>
+
+	<h:form>
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<p:growl id="messages" showDetail="true" />
+					<p:menubar id="tb">
+						<p:submenu label="Home" icon="fa fa-bank">
+							<p:menuitem value="Principal" action="menu?faces-redirect=true"
+								icon="fa fa-home" />
+							<p:menuitem value="Sair" action="#{loginBean.sairApp()}"
+								icon="fa fa-sign-out" />
+						</p:submenu>
+
+						<p:submenu label="Garagem" icon="fa fa-home">
+							<p:menuitem value="Carros" action="carro?faces-redirect=true"
+								icon="fa fa-car" />
+							<p:menuitem value="Manutenção" icon="fa fa-wrench"
+								action="novaManutencao?faces-redirect=true" />
+							<p:menuitem value="Oficinas" action="seguro?faces-redirect=true"
+								icon="fa fa-steam" />
+							<p:menuitem value="Multas" icon="fa fa-list-alt"
+								action="novaMulta?faces-redirect=true" />
+						</p:submenu>
+
+						<p:submenu label="Colaboradores" icon="fa fa-users">
+							<p:menuitem value="Motoristas" icon="fa fa-male"
+								action="motorista?faces-redirect=true" />
+							<p:menuitem value="Usuários" action="usuario?faces-redirect=true"
+								icon="fa fa-user" />
+						</p:submenu>
+
+						<p:submenu label="Viagens" icon="fa fa-road">
+							<p:menuitem value="Consultar" icon="fa fa-search"
+								action="consultaMapa?faces-redirect=true" />
+							<p:menuitem value="Nova Viagem" icon="fa fa-plus"
+								action="viagem?faces-redirect=true" />
+						</p:submenu>
+
+						<p:submenu label="Administrador" icon="fa fa-cubes">
+							<p:submenu label="Novo" icon="fa fa-plus">
+								<p:menuitem value="Usuário" icon="fa fa-plus"
+									action="novoUsuario?faces-redirect=true" />
+								<p:menuitem value="Oficina / Seguradora" icon="fa fa-wrench" />
+							</p:submenu>
+							<p:menuitem value="Controle de Ações" icon="fa fa-search-plus" />
+						</p:submenu>
+
+						<p:submenu label="Sobre" icon="fa fa-info">
+							<p:menuitem value="Sobre a Empresa" icon="fa fa-list-alt" />
+							<p:menuitem value="Manual do Sistema" icon="fa fa-file-text-o"
+								action="manual?faces-redirect=true" />
+							<p:menuitem value="Sobre o Sistema" icon="fa fa-desktop"
+								oncomplete="PF('exibirSobreDialog').show()" />
+							<p:menuitem value="Créditos" icon="fa fa-align-justify"
+								oncomplete="PF('exibirCreditosDialog').show()" />
+						</p:submenu>
+
+						<f:facet name="options">
+						</f:facet>
+					</p:menubar>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-12">
+					<ui:insert name="corpo" />
+				</div>
+			</div>
+		</div>
+
+		<p:sticky target="tb" />
+	</h:form>
+	<footer id="rodape">
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					<p>Gerenciador de Manutenção</p>
+				</div>
+				<div class="ui-grid-col-4">
+					<p>SimpleCar</p>
+				</div>
+				<div class="ui-grid-col-4" id="usuarioLogado">
+					<p>Logado como: #{usuarioLogadoBean.usuario.nome}</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<h:form>
+		<p:confirmDialog global="true">
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="dialog-sobre">
+		<p:dialog header="Sobre o Sistema" widgetVar="exibirSobreDialog"
+			id="sobre-dialog" closeOnEscape="true" resizable="false" modal="true">
+			<h:panelGrid columns="1">
+				<h:outputText
+					value="JAVA: 1.8, JSF(Mojarra-2.2.0), CDI(Weld 2.2.1.Fina), Hibernate 5.1.2.Final" />
+				<p:separator />
+				<h:outputText value="PrimeFaces: 5.2" />
+				<p:separator />
+				<h:outputText value="Banco de Dados: MySQL" />
+				<h:outputText value="MySQL Server: MAMP" />
+				<p:separator />
+				<h:outputText value="Servidor: Apache Tomcat 8" />
+				<p:separator />
+				<h:outputText value="Versão 1.0" />
+				<p:commandButton value="Sair"
+					oncomplete="PF('exibirSobreDialog').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="dialog-creditos">
+		<p:dialog header="Créditos" widgetVar="exibirCreditosDialog"
+			id="creditos-dialog" closeOnEscape="true" resizable="false"
+			modal="true">
+			<h:panelGrid columns="1">
+				<h:outputText
+					value="Amostra do Sistema SimpleCAr, apresentado junto ao curso" />
+				<h:outputText value=" de Análise e Desenvolvimento de Sistemas," />
+				<h:outputText
+					value=" da ETEP Faculdades, como parte das exigências para a obtenção do título de" />
+				<h:outputText
+					value="Tecnólogo de Análise e Desenvolvimento de Sistemas ." />
+				<p:separator />
+				<h:outputText value="Aluno: " />
+				<h:outputText value="Rafael de Andrade Guerra" />
+				<p:separator />
+				<h:outputText value="Orientadores:" />
+				<h:outputText value="Professor Victor Machado" />
+				<h:outputText value="Professor Pedro Mateus" />
+				<h:outputText value="Professor Yasuo Kono" />
+				<p:commandButton value="Sair"
+					oncomplete="PF('exibirCreditosDialog').hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

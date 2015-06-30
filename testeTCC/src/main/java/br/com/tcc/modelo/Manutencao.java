@@ -13,6 +13,9 @@ import javax.persistence.Id;
 //import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.tcc.enumClasse.TipoManutencao;
 
@@ -28,17 +31,17 @@ public class Manutencao implements Serializable {
 //	@ManyToOne
 //	@JoinColumn(name = "carro_id")
 //	private Carro carro;
-	
+	@NotEmpty(message="Carro")
 	private String placaCarro;
 
 	@Enumerated(EnumType.STRING)
 	private TipoManutencao tipoManutencao;
-
+	@NotEmpty
 	private String descServicos;
-
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date dataInicioManutencao;
-
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date dataFimManutencao;
 

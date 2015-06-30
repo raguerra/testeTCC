@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="corpo">
+		<h:form id="frm">
+			<p:messages id="msg-user" />
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3" id="meioNovoUsuario2">
+						<p:graphicImage library="simplecar" name="add_user.png" />
+					</div>
+					<div class="ui-grid-col-4" id="meioNovoUsuario">
+
+						<p:fieldset legend="Novo Usuário" style="margin-bottom:20px"
+							id="field-user">
+							<h:panelGrid columns="2" cellpadding="10">
+								<p:outputLabel value="Nome:" for="nome"/>
+								<p:inputText id="nome" required="true" size="30" value="#{usuarioBean.usuario.nome}"/>
+								
+								<p:outputLabel value="Tipo de Usuário" />
+					<p:selectOneMenu
+						value="#{usuarioBean.usuario.tipoUsuario}">
+						<f:selectItems value="#{usuarioBean.tipousuario}" var="tipo"
+							itemLabel="#{tipoUsuario.descricao}"
+							itemValue="#{tipoUsuario}" />
+					</p:selectOneMenu>
+							
+								<p:outputLabel value="Login:" for="login" />
+								<p:inputText id="login" required="true"
+									value="#{usuarioBean.usuario.login}" />
+
+								<p:outputLabel value="Senha:" for="senha" />
+								<p:password id="senha" feedback="true" inline="true"
+									value="#{usuarioBean.usuario.senha}" required="true" />
+
+								<p:outputLabel />
+								<p:commandButton value="Salvar" process="field-user"
+									action="#{usuarioBean.grava()}" update="msg-user field-user">
+									<p:resetInput target="field-user" />
+								</p:commandButton>
+
+							</h:panelGrid>
+						</p:fieldset>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

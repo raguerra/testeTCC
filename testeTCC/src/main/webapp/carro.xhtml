@@ -19,7 +19,7 @@
 			<p:messages id="msgs" />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
-					<p:commandButton value="Novo" icon="ui-icon-document"
+					<p:commandButton value="Novo" icon="fa fa-plus"
 						action="#{carroBean.preparaNovoCadastro}" process="@this"
 						update="carro-dialog" oncomplete="PF('edicaoCarroDialog').show()">
 						<p:resetInput target="carro-dialog" />
@@ -44,7 +44,7 @@
 							message="Deseja realmente excluir este Carro?" />
 					</p:commandButton>
 
-					<p:commandButton icon="ui-icon-arrowthick-1-s"
+					<p:commandButton icon="fa fa-file-excel-o"
 						title="Exportar para XLS" ajax="false" immediate="true">
 						<p:dataExporter type="xls" target="carro-table"
 							fileName="TabelaCarros" />
@@ -83,7 +83,9 @@
 				</p:column>
 
 				<p:column headerText="Data Aquisição">
-					<h:outputText value="#{carro.dataAquisicao}" />
+					<h:outputText value="#{carro.dataAquisicao}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Hodometro Inicial">

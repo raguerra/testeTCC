@@ -9,12 +9,18 @@
 
 	<ui:define name="corpo">
 
+		<f:metadata>
+			<f:viewAction action="#{multaBean.consultar()}" />
+		</f:metadata>
+
+		<h1>Multas</h1>
+
 		<h:form id="frm">
 			<p:messages id="msgs" />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
-					<p:commandButton value="Novo" icon="ui-icon-document"
-						action="#{carroBean.preparaNovoCadastro}" process="@this"
+					<p:commandButton value="Novo" icon="fa fa-plus"
+						action="#{multaBean.preparaNovoCadastro()}" process="@this"
 						update="multa-dialog" oncomplete="PF('edicaoMultaDialog').show()">
 						<p:resetInput target="multa-dialog" />
 					</p:commandButton>
@@ -22,7 +28,7 @@
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 
-					<p:commandButton icon="ui-icon-arrowthick-1-s"
+					<p:commandButton icon="fa fa-file-excel-o"
 						title="Exportar para XLS" ajax="false" immediate="true">
 						<p:dataExporter type="xls" target="multa-table"
 							fileName="TabelaMultas" />
@@ -30,41 +36,55 @@
 				</f:facet>
 			</p:toolbar>
 
-			<p:dataTable value="#{carroBean.carros}" var="carro" id="multa-table"
+			<p:dataTable value="#{multaBean.multas}" var="multa" id="multa-table"
 				emptyMessage="Nenhuma Multa Cadastrada" rows="5" paginator="true"
 				lazy="true" paginatorPosition="bottom" style="margin-top:10px"
-				selection="#{carroBean.carro}" selectionMode="single"
-				rowKey="#{carro.id}">
+				selection="#{multaBean.multa}" selectionMode="single"
+				rowKey="#{multa.id}">
 
 				<p:ajax event="rowSelect" update=":frm:toolbar" />
 				<p:ajax event="rowUnselect" update=":frm:toolbar" />
 
-				<p:column headerText="Placa" sortBy="#{carro.placa}" width="70">
-					<h:outputText value="#{carro.placa}" />
+				<p:column headerText="Placa" sortBy="#{multa.placaCarro}" width="70">
+					<h:outputText value="#{multa.placaCarro}" />
 				</p:column>
 
-				<p:column headerText="Tipo de Multa">
-					<h:outputText value="#{carro.marca}" />
+				<p:column headerText="Motorista" sortBy="#{multa.motorista}">
+					<h:outputText value="#{multa.motorista}" />
 				</p:column>
 
-				<p:column headerText="Valor" width="100">
-					<h:outputText value="#{carro.modelo}" />
+				<p:column headerText="Data" width="100">
+					<h:outputText value="#{multa.dataInfracao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Motorista" width="100">
-					<h:outputText value="#{carro.versao}" />
+				<p:column headerText="Logradouro" width="100">
+					<h:outputText value="#{multa.rua}" />
 				</p:column>
 
-				<p:column headerText="Data da Multa">
-					<h:outputText value="#{carro.chassi}" />
+				<p:column headerText="Cidade">
+					<h:outputText value="#{multa.cidade}" />
 				</p:column>
 
-				<p:column headerText="Hora da Multa">
-					<h:outputText value="#{carro.dataAquisicao}" />
+				<p:column headerText="Infração">
+					<h:outputText value="#{multa.infracao}" />
 				</p:column>
 
-				<p:column headerText="Local da Multa">
-					<h:outputText value="#{carro.hodometroInicial}" />
+				<p:column headerText="Gravidade">
+					<h:outputText value="#{multa.gravidade}" />
+				</p:column>
+
+				<p:column headerText="Valor">
+					<h:outputText value="#{multa.valor}">
+						<f:convertNumber currencySymbol="R$" type="currency" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Data Vencimento">
+					<h:outputText value="#{multa.dataVencimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 			</p:dataTable>
 
@@ -77,47 +97,64 @@
 				<p:messages id="msg-dialog" />
 
 				<p:panelGrid columns="2" id="painel-dialog">
-					<p:outputLabel value="Placa" for="placa" />
-					<p:inputMask id="placa" size="12" maxlength="8"
-						value="#{carroBean.carro.placa}" mask="aaa-9999">
-						<f:validateBean />
-					</p:inputMask>
+					<p:outputLabel value="Carro" />
+					<p:selectOneMenu value="#{multaBean.multa.placaCarro}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{carroBean.carros}" var="carro"
+							itemValue="#{carro.placa}" itemLabel="#{carro.placa}" />
+					</p:selectOneMenu>
 
-					<p:outputLabel value="Tipo de Multa" for="marca" />
-					<p:inputText id="marca" size="12" maxlength="12"
-						value="#{carroBean.carro.marca}" />
+					<p:outputLabel value="Motorista" />
+					<p:selectOneMenu value="#{multaBean.multa.motorista}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{motoristaBean.motoristas}" var="motorista"
+							itemValue="#{motorista.nome}" itemLabel="#{motorista.nome}" />
+					</p:selectOneMenu>
 
-					<p:outputLabel value="Valor" for="modelo" />
-					<p:inputText id="modelo" size="12" maxlength="12"
-						value="#{carroBean.carro.modelo}" />
-
-					<p:outputLabel value="Motorista" for="versao" />
-					<p:inputText id="versao" size="12" maxlength="12"
-						value="#{carroBean.carro.versao}" />
-
-					<p:outputLabel value="Data da Multa" for="chassi" />
-					<p:inputMask mask="*****************" id="chassi" size="20"
-						maxlength="17" value="#{carroBean.carro.chassi}" />
-
-					<p:outputLabel value="Hora da Multa" for="data-aquisicao" />
-					<p:calendar id="data-aquisicao" size="10" maxlength="10"
-						value="#{carroBean.carro.dataAquisicao}" pattern="dd/MM/yyyy"
+					<p:outputLabel value="Data da Infração" for="data-infracao" />
+					<p:calendar id="data-infracao" size="10" maxlength="10"
+						value="#{multaBean.multa.dataInfracao}" pattern="dd/MM/yyyy"
 						mask="99/99/9999" />
 
-					<p:outputLabel value="Local da Multa" for="hodometro-inicial" />
-					<p:inputText id="hodometro-inicial" size="20" maxlength="20"
-						value="#{carroBean.carro.hodometroInicial}" />
+					<p:outputLabel value="Logradouro" for="rua" />
+					<p:inputText id="rua" size="50" maxlength="50"
+						value="#{multaBean.multa.rua}" />
+
+					<p:outputLabel value="Cidade" for="cidade" />
+					<p:inputText id="cidade" size="50" maxlength="20"
+						value="#{multaBean.multa.cidade}" />
+
+					<p:outputLabel value="Infração" for="infracao" />
+					<p:inputText id="infracao" size="50" maxlength="50"
+						value="#{multaBean.multa.infracao}" />
+
+					<p:outputLabel value="Gravidade" />
+					<p:selectOneMenu value="#{multaBean.multa.gravidade}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItem itemLabel="GRAVISSIMA" itemValue="GRAVISSIMA" />
+						<f:selectItem itemLabel="GRAVE" itemValue="GRAVE" />
+						<f:selectItem itemLabel="MEDIA" itemValue="MEDIA" />
+						<f:selectItem itemLabel="LEVE" itemValue="LEVE" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Valor" for="valor" />
+					<p:inputText id="valor" size="50" maxlength="7"
+						value="#{multaBean.multa.valor}" />
+
+					<p:outputLabel value="Data do Vencimento" for="data-vencimento" />
+					<p:calendar id="data-vencimento" size="10" maxlength="10"
+						value="#{multaBean.multa.dataVencimento}" pattern="dd/MM/yyyy"
+						mask="99/99/9999" />
+
 
 					<p:outputLabel />
 					<p:commandButton value="Salvar" id="salvar-button"
-						action="#{carroBean.grava}" process="multa-dialog"
+						action="#{multaBean.grava()}" process="multa-dialog"
 						update="msg-dialog painel-dialog"
 						oncomplete="if(!args.validationFailed) PF('edicaoMultaDialog').hide()" />
 				</p:panelGrid>
 			</p:dialog>
 		</h:form>
-
 	</ui:define>
-
 </ui:composition>
 </html>

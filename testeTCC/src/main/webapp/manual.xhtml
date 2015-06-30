@@ -19,7 +19,19 @@
 						toggleSpeed="500" collapsed="true">
 						<p:ajax event="toggle" />
 						<h:panelGrid columns="1" cellpadding="5">
-							<h:outputText value="Como cadastrar um Carro"></h:outputText>
+							<h:outputText value="Como cadastrar um Carro" style="font-style: oblique;"/>
+							<h:outputText value="Na Barra de Menu, selecione:"/>
+							<h:outputText value="Garagem > Carros"/>
+							<h:outputText value="Você irá visualizar a tela de Cadastro de Carros:"/>
+							<p:graphicImage library="simplecar" name="tela-cadastro-carro.png" width="700px"/>
+							<h:outputText value="Depois clique no Botão [Novo]"/>
+							<h:outputText value="Será aberto uma caixa de dialogo:"/>
+							<p:graphicImage library="simplecar" name="dialogo-cadastro-carro.png" width="300px"/>
+							<h:outputText value="Digite os dados nos respectivos campos."/>
+							<h:outputText value="Não é aconselhavel deixar nenhum campo vazio." style="color:red"/>
+							<h:outputText value="Depois clique no botão [Salvar]"/>
+							<h:outputText value="Aparecerá uma mensagem de Cadastro com Sucesso:"/>
+							<p:graphicImage library="simplecar" name="msg-sucesso-carro.png" width="400px"/>
 						</h:panelGrid>
 					</p:fieldset>
 				</div>
@@ -33,7 +45,29 @@
 						toggleSpeed="500" collapsed="true">
 						<p:ajax event="toggle" />
 						<h:panelGrid columns="1" cellpadding="5">
-							<h:outputText value="Como cadastrar uma Nova Manutenção"></h:outputText>
+							<h:outputText value="Como cadastrar uma Manutenção" style="font-style: oblique;"/>
+							<h:outputText value="Na Barra de Menu, selecione:"/>
+							<h:outputText value="Garagem > Manutenção"/>
+							<h:outputText value="Você irá visualizar a tela Manutenção:"/>
+							<p:graphicImage library="simplecar" name="tela-cadastro-manutencao.png" width="700px"/>
+							<h:outputText value="Depois clique no Botão [Novo]"/>
+							<h:outputText value="Será aberto uma caixa de dialogo:"/>
+							<p:graphicImage library="simplecar" name="dialogo-manutencao.png" width="300px"/>
+							<h:outputText value="Digite os dados nos respectivos campos."/>
+							<h:outputText value="Todos os Campos devem ser preenchidos." style="color:red"/>
+							<h:outputText value="Por padrão o Tipo de Manutenção já vem preenchido como [Preventiva]." style="color:red"/>
+							<h:outputText value="Não esqueça de alterar, caso seja necessário." style="color:red"/>
+							<h:outputText value="Depois clique no botão [Salvar]"/>
+							<h:outputText value="Aparecerá uma mensagem de Confirmação:"/>
+							<p:graphicImage library="simplecar" name="conf-manutencao.png" width="400px"/>
+							<h:outputText value="Os dados de manutenção são sensiveis, por este motivo depois de salvos não é permitido alterar." style="color:red"/>
+							<h:outputText value="Esteja certo que os mesmos estão corretos." style="color:red"/>
+							<h:outputText value="Caso você clique em [Não], você será redirecinado a caixa de dialogo." style="color:blue"/>
+							<h:outputText value="Você poderá corrigir ou confirmar os dados antes que seja salvo." />
+							<h:outputText value="Clique em [Salvar] novamente para proseguir." />
+							<h:outputText value="Caso você clique em [Sim], os dados serão salvos com Sucesso." style="color:blue"/>
+							<h:outputText value="Após isso aparecerá na tela uma Mensagem de Cadastro com Sucesso." />
+							<p:graphicImage library="simplecar" name="sucesso-manutencao.png" width="400px"/>
 						</h:panelGrid>
 					</p:fieldset>
 				</div>

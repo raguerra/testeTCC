@@ -28,14 +28,14 @@ public class GraficoQuantidadeTipoManutencaoDao implements Serializable {
 	
 	public Long corretiva(){
 		Query corretiva = (Query) manager.createQuery("select count(tipoManutencao) from Manutencao"
-				+ "where tipoManutencao = 'CORRETIVA' ");
+				+ " where tipoManutencao = 'CORRETIVA' ");
 		Long quantidadeCorr = (Long)corretiva.getSingleResult();
 		return quantidadeCorr;
 	}
 	
 	public Long preditiva(){
 		Query preditiva = (Query) manager.createQuery("select count(tipoManutencao) from Manutencao"
-				+ "where tipoManutencao = 'PREDITIVA' ");
+				+ " where tipoManutencao = 'PREDITIVA' ");
 		Long quantidadePred = (Long)preditiva.getSingleResult();
 		return quantidadePred;
 	}

@@ -26,12 +26,18 @@
 			<p:messages id="msgs" />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
-					<p:commandButton value="Novo" icon="ui-icon-document"
+					<p:commandButton value="Novo" icon="fa fa-plus"
 						action="#{manutencaoBean.preparaNovoCadastro}" process="@this"
 						update="manutencao-dialog"
 						oncomplete="PF('edicaoManutencaoDialog').show()">
 						<p:resetInput target="manutencao-dialog" />
 					</p:commandButton>
+
+					<p:commandButton value="Manutenções" icon="fa fa-wrench"
+						process="@this" update="manutencao-table"
+						oncomplete="PF('exibeManutencaoDialog').show()">
+					</p:commandButton>
+
 				</f:facet>
 			</p:toolbar>
 			<p:dialog header="Nova Manutenção" widgetVar="edicaoManutencaoDialog"
@@ -39,6 +45,8 @@
 				closeOnEscape="true">
 
 				<p:messages id="msg-dialog" />
+
+				<p:defaultCommand target="salvar-button" scope="manutencao-dialog" />
 
 				<p:panelGrid columns="2" id="painel-dialog">
 					<p:outputLabel value="Tipo da Manutenção" />
@@ -59,8 +67,9 @@
 						value="#{manutencaoBean.manutencao.dataFimManutencao}"
 						pattern="dd/MM/yyyy" mask="99/99/9999" />
 
-					<p:outputLabel value="Selecione o Carro" />
+					<p:outputLabel value="Carro" />
 					<p:selectOneMenu value="#{manutencaoBean.manutencao.placaCarro}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItems value="#{carroBean.carros}" var="carro"
 							itemValue="#{carro.placa}" itemLabel="#{carro.placa}" />
 					</p:selectOneMenu>
@@ -79,7 +88,44 @@
 							message="Deseja realmente cadastrar esta manutenção. 
 						Depois de cadastrado não poderá ser alterado." />
 					</p:commandButton>
+
+
 				</p:panelGrid>
+			</p:dialog>
+
+			<p:dialog id="dados-dialog" widgetVar="exibeManutencaoDialog"
+				resizable="false" modal="true" closeOnEscape="true">
+				<p:dataTable value="#{manutencaoBean.manutencoes}" var="manutencao"
+					id="manutencao-table" emptyMessage="Nenhuma Manutenção Cadastrada"
+					rows="5" paginator="true" lazy="true" paginatorPosition="bottom"
+					style="margin-top:10px" selection="#{manutencaoBean.manutencao}"
+					selectionMode="single" rowKey="#{manutencao.id}">
+
+					<p:column headerText="Tipo de Manutenção"
+						sortBy="#{manutencao.tipoManutencao}" width="40">
+						<h:outputText value="#{manutencao.tipoManutencao}" />
+					</p:column>
+
+					<p:column headerText="Data Início" width="20">
+						<h:outputText value="#{manutencao.dataInicioManutencao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Data Fim" width="20">
+						<h:outputText value="#{manutencao.dataFimManutencao}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Carro" width="20">
+						<h:outputText value="#{manutencao.placaCarro}" />
+					</p:column>
+
+					<p:column headerText="Descrição dos Serviços" width="150">
+						<h:outputText value="#{manutencao.descServicos}" />
+					</p:column>
+				</p:dataTable>
 			</p:dialog>
 		</h:form>
 	</ui:define>

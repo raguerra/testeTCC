@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 //import javax.persistence.Query;
 //import javax.persistence.TypedQuery;
 //import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 //import javax.persistence.criteria.Root;
+
+
 
 import br.com.tcc.enumClasse.StatusBd;
 import br.com.tcc.modelo.Carro;
@@ -44,26 +47,16 @@ public class CarroDao implements Serializable {
 	
 	public List<Carro> listaTodos(){
 		
-		CriteriaQuery<Carro> query = manager.getCriteriaBuilder().createQuery(Carro.class);
-		query.select(query.from(Carro.class));
+//		CriteriaQuery<Carro> query = manager.getCriteriaBuilder().createQuery(Carro.class);
+//		query.select(query.from(Carro.class));
 		
-//		Query query = manager.createQuery("select * from Carro where statusBd = 'ATIVO' ");
-//		Query query = manager
-//                .createQuery("select c from Carro c where c.statusBd=?ATIVO");
-		
-		List<Carro> lista = manager.createQuery(query).getResultList();
+		Query query = manager.createQuery("select c from Carro c where c.statusBd=:pStatus");
+		query.setParameter("pStatus", StatusBd.ATIVO);
 		
 		
-//		List<Carro> lista = query.getResultList();
-		
-//		CriteriaBuilder builder = manager.getCriteriaBuilder();
-//		CriteriaQuery<Carro> query = builder.createQuery(Carro.class);
-//		Root<Carro> from = query.from(Carro.class);
-//
-//		TypedQuery<Carro> typedQuery = manager.createQuery(query.select(from).where(builder.like(from.get("statusBd"), "ATIVO")));
-//		List<Carro> resultado = typedQuery.getResultList();
-//		
-//		return resultado;
+//		List<Carro> lista = manager.createQuery(query).getResultList();
+		@SuppressWarnings("unchecked")
+		List<Carro> lista = query.getResultList();
 		
 		return lista;
 	}

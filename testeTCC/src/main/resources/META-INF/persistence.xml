@@ -10,6 +10,7 @@
 		<class>br.com.tcc.modelo.Motorista</class>
 		<class>br.com.tcc.modelo.Manutencao</class>
 		<class>br.com.tcc.modelo.Usuario</class>
+		<class>br.com.tcc.modelo.Multa</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/testeTCC" />

@@ -5,31 +5,79 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<ui:composition template="/WEB-INF/templates/Layout.xhtml">
+<ui:composition template="/WEB-INF/templates/Layout2.xhtml">
 
 	<ui:define name="corpo">
-
-		<div class="ui-grid ui-grid-responsive">
-			<div class="ui-grid-row">
-				<div class="ui-grid-col-4">
-					<h:panelGrid columns="2" columnClasses="left,right"
-						style="width:50%">
-						<p:chart type="bar"
-							model="#{graficoAtivoInativoBean.animatedModel}"
-							style="width:180px;" />
-					</h:panelGrid>
+		<h:form>
+			<p:growl id="growl" showDetail="true" />
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3" id="lateral">
+						<h:panelGrid columns="1" style="width:100%">
+							<p:chart type="bar"
+								model="#{graficoAtivoInativoBean.animatedModel}"
+								style="width:200px;" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-grid-col-5">
+						<h:panelGrid columns="1" style="width:100%">
+							<p:chart type="bar"
+								model="#{graficoQuantidadeMotoristaBean.animatedModel}"
+								style="width:500px;" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-grid-col-4">
+						<p:chart type="pie"
+							model="#{graficoQuantidadeTipoManutencaoBean.pie}"
+							style="width:400px;height:300px" />
+					</div>
 				</div>
-				<div class="ui-grid-col-4">
-					<h:panelGrid columns="2" columnClasses="left,right"
-						style="width:100%">
-						<p:chart type="bar"
-							model="#{graficoQuantidadeMotoristaBean.animatedModel}"
-							style="width:500px;" />
-					</h:panelGrid>
-				</div>
-				<div class="ui-grid-col-4"></div>
 			</div>
-		</div>
+
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-3" id="lateral">
+						<p:fieldset legend="Gastos com Multas" style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="Valor Total das Multas:" />
+								<h:outputText value="#{indicadorValorMultaBean.somar()}">
+									<f:convertNumber currencySymbol="R$" type="currency" />
+								</h:outputText>
+							</h:panelGrid>
+						</p:fieldset>
+					</div>
+					<div class="ui-grid-col-5">
+						<!-- <p:fieldset legend="Gastos com Multas por Motorista"
+							style="margin-bottom:20px">
+							<p:dataTable value="#{indicadorValorMultaBean.multas}" var="multa"
+								id="multa-table" emptyMessage="Nenhuma Usuario Cadastrado"
+								rows="5" paginator="true" paginatorPosition="bottom"
+								style="margin-top:10px" >
+
+								<p:column headerText="Nome" sortBy="#{multa.motorista}" width="70">
+									<h:outputText value="#{multa.motorista}" />
+								</p:column>
+
+								<p:column headerText="Valor" width="70">
+									<h:outputText value="#{multa.valor}" >
+										<f:convertNumber currencySymbol="R$" type="currency" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</p:fieldset> -->
+
+					</div>
+					<div class="ui-grid-col-4">
+						<p:chart type="pie" model="#{graficoPizzaGravidadeMultaBean.pie}"
+							style="width:400px;height:300px">
+							<p:ajax event="itemSelect"
+								listener="#{graficoPizzaGravidadeMultaBean.itemSelect}"
+								update="growl" />
+						</p:chart>
+					</div>
+				</div>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>
